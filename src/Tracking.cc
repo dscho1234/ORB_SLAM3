@@ -1397,7 +1397,7 @@ bool Tracking::ParseIMUParamFile(cv::FileStorage &fSettings)
     mFastInit = false;
     if(!node.empty())
     {
-        mFastInit = static_cast<int>(fSettings["IMU.fastInit"]) != 0;
+        mFastInit = static_cast<int>(fSettings["IMU.fastInit"]) != 0;        
     }
 
     if(mFastInit)
@@ -1734,6 +1734,13 @@ void Tracking::PreintegrateIMU()
     //Verbose::PrintMess("Preintegration is finished!! ", Verbose::VERBOSITY_DEBUG);
 }
 
+void Tracking::ClearImuQueue()
+{
+    unique_lock<mutex> lock(mMutexImuQueue);
+    mlQueueImuData.clear();
+    mvImuFromLastFrame.clear();
+    Verbose::PrintMess("IMU queue cleared", Verbose::VERBOSITY_NORMAL);
+}
 
 bool Tracking::PredictStateIMU()
 {

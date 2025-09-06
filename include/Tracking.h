@@ -108,6 +108,9 @@ public:
 
     float GetImageScale();
 
+    // Clear IMU queue
+    void ClearImuQueue();
+
 #ifdef REGISTER_LOOP
     void RequestStop();
     bool isStopped();

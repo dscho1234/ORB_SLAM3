@@ -570,6 +570,13 @@ vector<Eigen::Matrix4f> System::GetCameraTrajectory()
 {
     vector<KeyFrame*> vpKFs = mpAtlas->GetAllKeyFrames();
     sort(vpKFs.begin(),vpKFs.end(),KeyFrame::lId);
+    
+    // Check if there are any keyframes
+    if(vpKFs.empty())
+    {
+        std::cout << "No keyframes available yet. SLAM may not be initialized." << std::endl;
+        return vector<Eigen::Matrix4f>();
+    }
 
     // Transform all keyframes so that the first keyframe is at the origin.
     // After a loop closure the first keyframe might not be at the origin.
